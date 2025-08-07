@@ -1,0 +1,8 @@
+pywebview==4.4.1
+sqlite3
+hashlib
+secrets
+json
+datetime
+pathlib
+typing
