@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #4a5568;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #f7fafc;
+            border-right: 1px solid #e2e8f0;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4a5568;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-full {
+            width: 100%;
+        }
+        
+        .error-message {
+            color: #e53e3e;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .success-message {
+            color: #38a169;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .nav-item {
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .nav-item:hover {
+            background: #e2e8f0;
+        }
+        
+        .nav-item.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .logout-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        
+        .logout-btn:hover {
+            background: #c53030;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-form">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #4a5568;">Mathematics Lab</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-full">Login</button>
+                <div id="loginError" class="error-message hidden"></div>
+            </form>
+            <div style="text-align: center; margin-top: 2rem; color: #718096; font-size: 0.875rem;">
+                Default SuperAdmin: admin / admin123
+            </div>
+        </div>
+        
+        <!-- Main Application -->
+        <div id="mainApp" class="hidden">
+            <div class="header">
+                <h1>Mathematics Lab</h1>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div>
+                        <div id="userName" style="font-weight: 600;"></div>
+                        <div id="userRole" style="font-size: 0.875rem; opacity: 0.8;"></div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="sidebar">
+                    <div id="navigation"></div>
+                </div>
+                
+                <div class="content-area">
+                    <div id="contentArea">
+                        <div class="card">
+                            <div class="card-title">Welcome to Mathematics Lab</div>
+                            <p>Select an option from the sidebar to get started.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentUser = null;
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            checkSession();
+            
+            // Set up login form
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        });
+        
+        async function checkSession() {
+            try {
+                const user = await pywebview.api.get_current_user();
+                if (user) {
+                    currentUser = user;
+                    showMainApp();
+                }
+            } catch (error) {
+                console.log('No active session');
+            }
+        }
+        
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            try {
+                const result = await pywebview.api.login(username, password);
+                
+                if (result.success) {
+                    currentUser = result.user;
+                    showMainApp();
+                } else {
+                    errorDiv.textContent = result.message || 'Login failed';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'An error occurred during login';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+        
+        function showMainApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            
+            // Update user info
+            const userName = `${currentUser.first_name || ''} ${currentUser.last_name || ''}`.trim() || currentUser.username;
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userRole').textContent = currentUser.role;
+            document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
+            
+            // Build navigation based on user role
+            buildNavigation();
+        }
+        
+        function buildNavigation() {
+            const nav = document.getElementById('navigation');
+            const items = [];
+            
+            // Common items
+            items.push({ id: 'dashboard', text: 'Dashboard', icon: '📊' });
+            
+            // Role-specific items
+            switch (currentUser.role) {
+                case 'SuperAdmin':
+                    items.push({ id: 'schools', text: 'Manage Schools', icon: '🏫' });
+                    items.push({ id: 'users', text: 'Manage Users', icon: '👥' });
+                    break;
+                    
+                case 'SchoolAdmin':
+                    items.push({ id: 'classes', text: 'Manage Classes', icon: '📚' });
+                    items.push({ id: 'teachers', text: 'Manage Teachers', icon: '👨‍🏫' });
+                    items.push({ id: 'students', text: 'Manage Students', icon: '👨‍🎓' });
+                    items.push({ id: 'syllabus', text: 'CBSE Syllabus', icon: '📋' });
+                    break;
+                    
+                case 'Teacher':
+                    items.push({ id: 'my-classes', text: 'My Classes', icon: '📚' });
+                    items.push({ id: 'lessons', text: 'Lessons', icon: '📖' });
+                    items.push({ id: 'activities', text: 'Activities', icon: '🎯' });
+                    items.push({ id: 'analytics', text: 'Analytics', icon: '📈' });
+                    break;
+                    
+                case 'Student':
+                    items.push({ id: 'my-syllabus', text: 'My Syllabus', icon: '📋' });
+                    items.push({ id: 'lessons', text: 'Lessons', icon: '📖' });
+                    items.push({ id: 'activities', text: 'Activities', icon: '🎯' });
+                    items.push({ id: 'progress', text: 'My Progress', icon: '📈' });
+                    break;
+            }
+            
+            // Profile and settings
+            items.push({ id: 'profile', text: 'Profile', icon: '👤' });
+            
+            // Build navigation HTML
+            nav.innerHTML = items.map(item => 
+                `<div class="nav-item" onclick="navigateTo('${item.id}')">
+                    ${item.icon} ${item.text}
+                </div>`
+            ).join('');
+        }
+        
+        async function navigateTo(section) {
+            // Update active navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Load content
+            const contentArea = document.getElementById('contentArea');
+            
+            try {
+                const content = await pywebview.api.get_page_content(section);
+                contentArea.innerHTML = content;
+            } catch (error) {
+                contentArea.innerHTML = `
+                    <div class="card">
+                        <div class="card-title">Error</div>
+                        <p>Failed to load content: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function logout() {
+            try {
+                await pywebview.api.logout();
+                currentUser = null;
+                
+                // Reset form
+                document.getElementById('loginForm').reset();
+                document.getElementById('loginError').classList.add('hidden');
+                
+                // Show login screen
+                document.getElementById('mainApp').classList.add('hidden');
+                document.getElementById('loginScreen').classList.remove('hidden');
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
