@@ -1,0 +1,8 @@
+pywebview==4.4.1
+bcrypt==4.1.2
+sqlite3
+json
+datetime
+uuid
+hashlib
+secrets
